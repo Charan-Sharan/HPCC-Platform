@@ -37,7 +37,7 @@ on:
 env:
   ML_SUPPRESS_WARNING_FILES: "RegressionTestModified.ecl ClassificationTestModified.ecl"
   ML_EXCLUDE_FILES: "--ef ClassicTestModified.ecl,SVCTest.ecl,ClassificationTestModified.ecl"
-  BUNDLES_TO_TEST: "ML_Core PBblas GLM  GNN DBSCAN LearningTrees TextVectors KMeans SupportVectorMachines LinearRegression LogisticRegression"       
+  BUNDLES_TO_TEST: "ML_Core PBblas GLM GNN DBSCAN LearningTrees TextVectors KMeans SupportVectorMachines LinearRegression LogisticRegression"       
   uploadArtifact: false 
   
 jobs:
@@ -109,11 +109,11 @@ jobs:
               break
             fi
           done
-          BUNDLES_TO_TEST=$(echo $BUNDLES_TO_TEST | sed 's/ /\n/g' | sort | uniq -i )
+          BUNDLES_TO_TEST=$(echo $BUNDLES_TO_TEST | sed 's/ /\n/g' | sort -bf | uniq -i )
           #                ( print bundles list   | replace all spaces with new-line | sort the list | select unique items )
           BUNDLES_TO_TEST=${BUNDLES_TO_TEST//$'\n'/ } # replace all newline characters with spaces
           echo "BUNDLES TO TEST : $BUNDLES_TO_TEST"
-          echo $BUNDLES_TO_TEST >> $GITHUB_ENV
+          echo "BUNDLES_TO_TEST=$BUNDLES_TO_TEST" >> $GITHUB_ENV
 
       - name: Install ML Dependencies
         shell: "bash"
