@@ -92,7 +92,7 @@ jobs:
           for LINE in $TABLES_DATA
           do
             LINE=${LINE# }   #removing space from begining of the line
-            LINE=${LINE%% *} #remove trailing spaces.
+            LINE=${LINE%% [^A-Za-z0-9]*} #remove trailing spaces.
             if [[ ${LINE:0:1} == "=" ]]; then 
               HEADER_COUNT=$(( HEADER_COUNT + 1 ))
               continue
